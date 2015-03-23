@@ -1,7 +1,3 @@
-var net = require('net');
-var clients = [];
-var port = 9000;
-
 /**
  * Handle client connection
  * @param client
@@ -58,7 +54,12 @@ function broadcast(msg) {
     }
 }
 
-var server = net.createServer(connect);
+var net = require('net');
+var server = net.createServer();
+var clients = [];
+var port = 9000;
+
+server.on('connection', connect);
 server.listen(port);
 
 console.log('Listening on port {port}...'.replace('{port}', port));
