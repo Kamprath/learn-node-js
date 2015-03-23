@@ -13,7 +13,6 @@ function connect(client) {
 
     // send client a greeting message
     client.write('Welcome to the server, client ' + client.id + '!\n');
-    console.log('Client ' + client.id + ' connected.');
     broadcast('Client ' + client.id + ' connected');
 
     // initialize event handlers
@@ -28,9 +27,7 @@ function connect(client) {
         client.destroy();
 
         // notify server and clients of disconnect
-        var msg = 'Client ' + client.id + ' disconnected';
-        broadcast(msg);
-        console.log(msg);
+        broadcast('Client ' + client.id + ' disconnected');
     });
 
     client.on('error', function(error) {
@@ -52,9 +49,11 @@ function say(msg, client) {
  * @param msg
  */
 function broadcast(msg) {
+    msg = msg.replace(/[\n\r]/g, '');
+    console.log(msg);
     for (var i in clients) {
         if (clients[i].writable) {
-            clients[i].write(msg.replace(/[\n\r]/g, '') + '\n');
+            clients[i].write(msg + '\n');
         }
     }
 }
