@@ -9,7 +9,7 @@ function connect(client) {
 
     // send client a greeting message
     client.write('Welcome to the server, client ' + client.id + '!\n');
-    broadcast('Client ' + client.id + ' connected');
+    broadcast('Client ' + client.id + ' connected from ' + client.remoteAddress + ':' + client.remotePort);
 
     // initialize event handlers
     client.on('data', function(data) {
